@@ -1,0 +1,11 @@
+.register__button-login {
+  text-decoration: none;
+  color: #fff;
+  transition: .5s;
+  cursor: pointer;
+  padding-left: 5px;
+}
+
+.register__button-login:hover {
+  opacity: .6;
+}

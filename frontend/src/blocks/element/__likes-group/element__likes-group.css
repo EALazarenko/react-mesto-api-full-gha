@@ -1,0 +1,8 @@
+.element__likes-group {
+  display: flex;
+  flex-direction: column;
+  min-width: 22px;
+  min-height: 35px;
+  margin: 0;
+  padding: 0;
+}
