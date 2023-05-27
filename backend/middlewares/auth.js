@@ -5,7 +5,7 @@ const { JWT_SECRET } = require('../config');
 const AuthError = require('../errors/AuthError');
 
 module.exports = (req, res, next) => {
-  const token = req.cookies.jwt;
+  const token = req.cookies.jwt || req.headers.authorization.split(' ')[1];
 
   if (!token) {
     return next(new AuthError('Требуется авторизация1!'));

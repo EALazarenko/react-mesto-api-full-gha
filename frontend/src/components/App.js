@@ -39,7 +39,7 @@ function App() {
     if (!data) {
       throw new Error('Ошибка аутентификации');
     }
-    if (data.token) {
+    if (data) {
       localStorage.setItem('token', data.token);
       setLoggedIn(true);
       setUserEmail(data.email);
@@ -135,7 +135,7 @@ function App() {
     if (token && !loggedIn) {
       setLoading(true)
       auth.checkToken(token)
-        .then(({ data }) => {
+        .then((data) => {
           setUserEmail(data.email);
           setLoggedIn(true);
           navigate('/', { replace: true });
@@ -238,9 +238,10 @@ function App() {
   }
 
   function handleUpdateUser({ name, about }) {
-    api.editUserInfo(name, about)
-      .then(({ name, about, avatar, _id }) => {
-        setCurrentUser({ name, about, avatar, _id });
+    api
+      .editUserInfo(name, about)
+      .then(({data}) => {
+        setCurrentUser(data);
         closeAllPopups();
       })
       .catch((err) => {
@@ -251,7 +252,7 @@ function App() {
   function handleUpdateAvatar(newAvatar) {
     api
       .changeAvatar(newAvatar)
-      .then((data) => {
+      .then(({ data }) => {
         setCurrentUser(data);
         closeAllPopups();
       })
