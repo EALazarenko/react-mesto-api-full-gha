@@ -3,10 +3,10 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 // eslint-disable-next-line import/no-extraneous-dependencies
-/* const cors = require('cors'); */
+const cors = require('cors');
 const cookieParser = require('cookie-parser');
 /* const cors = require('./middlewares/cors'); */
-const cors = require('./middlewares/cors');
+/* const cors = require('./middlewares/cors'); */
 // eslint-disable-next-line import/no-extraneous-dependencies
 const { PORT, BASE_PATH } = require('./config');
 const router = require('./routes/index');
@@ -21,8 +21,6 @@ const errorHandler = require('./middlewares/err');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(requestLogger);
-app.use(router);
 
 mongoose.connect('mongodb://127.0.0.1/mestodb', {
   useNewUrlParser: true,
@@ -30,25 +28,27 @@ mongoose.connect('mongodb://127.0.0.1/mestodb', {
   .then(() => console.log('база подключена'))
   .catch((err) => console.log(err));
 
-app.use(cors, cookieParser(), requestLogger);
+/* app.use(cors, cookieParser(), requestLogger); */
 
-/* const corsOptions = {
+const corsOptions = {
   origin: '*',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   allowedHeaders: ['Content-Type', 'Authorization'],
   preflightContinue: false,
   optionsSuccessStatus: 204,
 };
-app.use(cors(corsOptions)); */
+app.use(cors(corsOptions));
 
 /* app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 }); */
 
-app.listen(PORT, () => {
-  console.log('Ссылка на сервер:', `${BASE_PATH}:${PORT}`);
-});
-
+app.use(requestLogger);
+app.use(router);
 app.use(errorLogger);
 app.use(errors());
 app.use(errorHandler);
+
+app.listen(PORT, () => {
+  console.log('Ссылка на сервер:', `${BASE_PATH}:${PORT}`);
+});
