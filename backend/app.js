@@ -6,10 +6,11 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const cookieParser = require('cookie-parser');
+const { PORT, BASE_PATH } = require('./config');
 const router = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-const { PORT = 3001 } = process.env;
+/* const { PORT = 3001 } = process.env; */
 const app = express();
 // eslint-disable-next-line import/no-extraneous-dependencies, import/order
 const { errors } = require('celebrate');
@@ -36,8 +37,12 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-app.listen(PORT, () => {
+/* app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
+}); */
+
+app.listen(PORT, () => {
+  console.log('Ссылка на сервер:', `${BASE_PATH}:${PORT}`);
 });
 
 app.use(errorLogger);
