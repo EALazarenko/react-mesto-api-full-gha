@@ -16,6 +16,7 @@ const app = express();
 // eslint-disable-next-line import/no-extraneous-dependencies, import/order
 const { errors } = require('celebrate');
 const errorHandler = require('./middlewares/err');
+const corsOptionsDelegate = require('./middlewares/cors');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -29,7 +30,7 @@ mongoose.connect('mongodb://127.0.0.1/mestodb', {
   .then(() => console.log('база подключена'))
   .catch((err) => console.log(err));
 
-app.use(cors);
+app.use(cors(corsOptionsDelegate), cookieParser(), requestLogger);
 
 /* const corsOptions = {
   origin: '*',
