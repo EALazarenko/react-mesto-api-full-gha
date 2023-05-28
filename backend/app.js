@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 // eslint-disable-next-line import/no-extraneous-dependencies
 /* const cors = require('cors'); */
 const cookieParser = require('cookie-parser');
+/* const cors = require('./middlewares/cors'); */
 const cors = require('./middlewares/cors');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const { PORT, BASE_PATH } = require('./config');
@@ -16,7 +17,6 @@ const app = express();
 // eslint-disable-next-line import/no-extraneous-dependencies, import/order
 const { errors } = require('celebrate');
 const errorHandler = require('./middlewares/err');
-const corsOptionsDelegate = require('./middlewares/cors');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -30,7 +30,7 @@ mongoose.connect('mongodb://127.0.0.1/mestodb', {
   .then(() => console.log('база подключена'))
   .catch((err) => console.log(err));
 
-app.use(cors(corsOptionsDelegate), cookieParser(), requestLogger);
+app.use(cors, cookieParser(), requestLogger);
 
 /* const corsOptions = {
   origin: '*',

@@ -12,7 +12,7 @@ const corsOptions = {
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 };
 
-const corsOptionsDelegate = function (req, callback) {
+module.exports = (req, callback) => {
   if (allowlist.indexOf(req.header('Origin')) !== -1) {
     corsOptions.origin = true;
   } else {
@@ -21,7 +21,7 @@ const corsOptionsDelegate = function (req, callback) {
   callback(null, corsOptions);
 };
 
-module.exports = corsOptionsDelegate;
+/* module.exports = corsOptionsDelegate; */
 
 /* const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
 
