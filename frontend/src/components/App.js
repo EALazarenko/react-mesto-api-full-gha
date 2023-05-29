@@ -129,7 +129,7 @@ function App() {
     }
   }, []); */
 
-  const cbTokenCheck = () => {
+  /* const cbTokenCheck = () => {
 
     const token = localStorage.getItem('token');
     if (token && !loggedIn) {
@@ -148,7 +148,7 @@ function App() {
     } else {
       setLoading(false);
     }
-  };
+  }; */
 
   const cbLogout = () => {
     setLoggedIn(false);
@@ -156,8 +156,28 @@ function App() {
   }
 
   useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token && !loggedIn) {
+      setLoading(true)
+      auth.checkToken(token)
+        .then((data) => {
+          setUserEmail(data.email);
+          setLoggedIn(true);
+          navigate('/', { replace: true });
+
+        })
+        .catch((err) => {
+          console.log(`Ошибка: ${err}`);
+        })
+        .finally(() => setLoading(false))
+    } else {
+      setLoading(false);
+    }
+  }, [loggedIn]);
+
+  /* useEffect(() => {
     cbTokenCheck();
-  }, []);
+  }, []); */
 
   useEffect(() => {
     api.getUserInfo()
