@@ -5,8 +5,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
-const { JWT_SECRET } = require('../utils/constants');
-/* const { JWT_SECRET } = require('../config'); */
+/* const { JWT_SECRET } = require('../utils/constants'); */
+const { JWT_SECRET } = require('../config');
 const ConflictError = require('../errors/ConflictError');
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequestError');
@@ -26,8 +26,8 @@ module.exports.login = (req, res, next) => {
         httpOnly: true,
         sameSite: true,
       });
-      res.send({ message: token });
-      console.log(token, JWT_SECRET);
+      res.send({ message: token, JWT_SECRET });
+      console.log(token);
     })
     .catch(next);
 };
