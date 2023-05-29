@@ -27,7 +27,7 @@ module.exports.login = (req, res, next) => {
         sameSite: true,
       });
       res.send({ message: token });
-      console.log(token);
+      console.log(token, JWT_SECRET);
     })
     .catch(next);
 };
