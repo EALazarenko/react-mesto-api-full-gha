@@ -15,7 +15,8 @@ class Api {
 
   // получение всех карточек
 
-  getInitialCards(token) {
+  getInitialCards() {
+    const token = localStorage.getItem('token');
     return fetch(`${this._baseUrl}/cards`, {
       headers: {
         "Content-Type": "application/json",
