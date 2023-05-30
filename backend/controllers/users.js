@@ -6,7 +6,8 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
 /* const { JWT_SECRET } = require('../utils/constants'); */
-const { JWT_SECRET } = require('../config');
+/* const { JWT_SECRET } = require('../config'); */
+const { NODE_ENV, JWT_SECRET } = process.env;
 const ConflictError = require('../errors/ConflictError');
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequestError');
@@ -18,15 +19,15 @@ module.exports.login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        JWT_SECRET,
+        NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key',
         { expiresIn: '7d' },
       );
-      res.cookie('jwt', token, {
+      /* res.cookie('jwt', token, {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
         sameSite: true,
-      });
-      res.send({ message: token, JWT_SECRET });
+      }); */
+      res.send({ token });
       console.log(token);
     })
     .catch(next);

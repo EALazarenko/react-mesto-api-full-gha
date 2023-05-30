@@ -3,20 +3,7 @@ import { BASE_URL } from "./auth";
 class Api {
   constructor(options) {
     this._baseUrl = options.baseUrl;
-    this._headers = options.headers;
   }
-
-  _headersData = () => {
-    this._token = localStorage.getItem('token'); // token
-    this._headers.authorization = `Bearer ${this._token}`
-    return this._headers;
-  }
-
-  /* _headersData = () => {
-    const token = localStorage.getItem('token'); // token
-    const headers = `Bearer ${token}`
-    return headers;
-  } */
 
   // проверка на ошибку
   _getResponse(res) {
@@ -27,15 +14,8 @@ class Api {
   }
 
   // получение всех карточек
- /*  getInitialCards() {
-    return fetch(`${this._baseUrl}/cards`, {
-      headers: this._headersData(), // убрала this
-    })
-      .then(res => this._getResponse(res));
-  } */
 
-  getInitialCards() {
-    const token = localStorage.getItem('token');
+  getInitialCards(token) {
     return fetch(`${this._baseUrl}/cards`, {
       headers: {
         "Content-Type": "application/json",
@@ -46,10 +26,13 @@ class Api {
   }
 
   // создание карточки
-  addCard(data) {
+  addCard(data, token) {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
-      headers: this._headersData(),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
       body: JSON.stringify({
         name: data.name,
         link: data.link,
@@ -60,51 +43,67 @@ class Api {
   //получение инфы о пользователе
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
-      headers: this._headersData(),
+      credentials: 'include',
+      headers: this._headers
     })
       .then(res => this._getResponse(res));
   }
 
   // Лайк
-  setLike(id) {
+  setLike(id, token) {
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: 'PUT',
-      headers: this._headersData(),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
     })
       .then(res => this._getResponse(res));
   }
 
   // снятие лайка
-  deleteLike(id) {
+  deleteLike(id, token) {
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: 'DELETE',
-      headers: this._headersData(),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
     })
       .then(res => this._getResponse(res));
   }
 
-  changeLikeCardStatus(id, isLiked) {
+  changeLikeCardStatus(id, isLiked, token) {
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: `${!isLiked ? 'DELETE' : 'PUT'}`,
-      headers: this._headersData(),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
     })
       .then(res => this._getResponse(res));
   }
 
   // Удаление
-  deleteCard(id) {
+  deleteCard(id, token) {
     return fetch(`${this._baseUrl}/cards/${id}`, {
       method: 'DELETE',
-      headers: this._headersData(),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
     })
       .then(res => this._getResponse(res));
   }
 
   //редактирование информации о пользователе
-  editUserInfo(name, about) {
+  editUserInfo(name, about, token) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
-      headers: this._headersData(),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
       body: JSON.stringify({
         name,
         about,
@@ -114,10 +113,13 @@ class Api {
   }
 
   // смена аватара
-  changeAvatar(data) {
+  changeAvatar(data, token) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
-      headers: this._headersData(),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
       body: JSON.stringify({
         avatar: data.avatar
       })
@@ -126,11 +128,11 @@ class Api {
   }
 }
 
-export const api = new Api({
+const api = new Api({
   baseUrl: BASE_URL,
   headers: {
-    "Content-Type": "application/json",
-    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
   },
 });
 
