@@ -31,7 +31,12 @@ mongoose.connect('mongodb://127.0.0.1/mestodb', {
 /* app.use(cors, cookieParser(), requestLogger); */
 
 const corsOptions = {
-  origin: '*',
+  origin: ['http://mesto.lazarenkoea.nomoredomains.monster',
+    'https://api.mesto.lazarenkoea.nomoredomains.rocks',
+    'http://api.mesto.lazarenkoea.nomoredomains.rocks',
+    'https://mesto.lazarenkoea.nomoredomains.monster',
+    'http://localhost:3000',
+    'https://localhost:3000'],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   allowedHeaders: ['Content-Type', 'Authorization'],
   preflightContinue: false,
