@@ -12,6 +12,12 @@ class Api {
     return this._headers;
   }
 
+  /* _headersData = () => {
+    const token = localStorage.getItem('token'); // token
+    const headers = `Bearer ${token}`
+    return headers;
+  } */
+
   // проверка на ошибку
   _getResponse(res) {
     if (res.ok) {
@@ -21,9 +27,20 @@ class Api {
   }
 
   // получение всех карточек
-  getInitialCards() {
+ /*  getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
-      headers: this._headersData(),
+      headers: this._headersData(), // убрала this
+    })
+      .then(res => this._getResponse(res));
+  } */
+
+  getInitialCards() {
+    const token = localStorage.getItem('token');
+    return fetch(`${this._baseUrl}/cards`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
     })
       .then(res => this._getResponse(res));
   }
