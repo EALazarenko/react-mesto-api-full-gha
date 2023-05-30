@@ -37,6 +37,7 @@ const corsOptions = {
     'https://mesto.lazarenkoea.nomoredomains.monster',
     'http://localhost:3000',
     'https://localhost:3000'],
+  credentials: true,
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   allowedHeaders: ['Content-Type', 'Authorization'],
   preflightContinue: false,
