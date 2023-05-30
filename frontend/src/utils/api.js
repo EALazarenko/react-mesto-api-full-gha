@@ -27,7 +27,8 @@ class Api {
   }
 
   // создание карточки
-  addCard(data, token) {
+  addCard(data) {
+    const token = localStorage.getItem('token');
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: {
@@ -51,7 +52,8 @@ class Api {
   }
 
   // Лайк
-  setLike(id, token) {
+  setLike(id) {
+    const token = localStorage.getItem('token');
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: 'PUT',
       headers: {
@@ -63,7 +65,8 @@ class Api {
   }
 
   // снятие лайка
-  deleteLike(id, token) {
+  deleteLike(id) {
+    const token = localStorage.getItem('token');
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: 'DELETE',
       headers: {
@@ -74,7 +77,8 @@ class Api {
       .then(res => this._getResponse(res));
   }
 
-  changeLikeCardStatus(id, isLiked, token) {
+  changeLikeCardStatus(id, isLiked) {
+    const token = localStorage.getItem('token');
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: `${!isLiked ? 'DELETE' : 'PUT'}`,
       headers: {
@@ -86,7 +90,8 @@ class Api {
   }
 
   // Удаление
-  deleteCard(id, token) {
+  deleteCard(id) {
+    const token = localStorage.getItem('token');
     return fetch(`${this._baseUrl}/cards/${id}`, {
       method: 'DELETE',
       headers: {
@@ -98,7 +103,8 @@ class Api {
   }
 
   //редактирование информации о пользователе
-  editUserInfo(name, about, token) {
+  editUserInfo(name, about) {
+    const token = localStorage.getItem('token');
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: {
@@ -114,7 +120,8 @@ class Api {
   }
 
   // смена аватара
-  changeAvatar(data, token) {
+  changeAvatar(data) {
+    const token = localStorage.getItem('token');
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: {
@@ -133,7 +140,7 @@ const api = new Api({
   baseUrl: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+    'Authorization': `Bearer ${localStorage.getItem('token')}`,
   },
 });
 
