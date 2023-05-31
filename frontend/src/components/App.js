@@ -138,6 +138,14 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    if (loggedIn) {
+      navigate('/', { replace: true });
+    }
+  }, [loggedIn]);
+
+
+
   const closeAllPopups = () => {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
