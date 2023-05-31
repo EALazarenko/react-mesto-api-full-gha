@@ -67,7 +67,7 @@ module.exports.createUser = (req, res, next) => {
     .then((user) => {
       const data = user.toObject();
       delete data.password;
-      res.send(data);
+      res.status(201).send(data);
     })
     .catch((err) => {
       if (err.code === 11000) {
