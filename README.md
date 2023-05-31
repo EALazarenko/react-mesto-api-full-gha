@@ -6,7 +6,7 @@
 
 ## Ссылки на проект
 
-IP-адрес 158.160.48.152
+IP 158.160.48.152
 
 Frontend https://mesto.lazarenkoea.nomoredomains.monster
 
