@@ -5,14 +5,11 @@ const mongoose = require('mongoose');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-/* const cors = require('./middlewares/cors'); */
-/* const cors = require('./middlewares/cors'); */
 // eslint-disable-next-line import/no-extraneous-dependencies
 const { PORT, BASE_PATH } = require('./config');
 const router = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-/* const { PORT = 3001 } = process.env; */
 const app = express();
 // eslint-disable-next-line import/no-extraneous-dependencies, import/order
 const { errors } = require('celebrate');
@@ -28,8 +25,6 @@ mongoose.connect('mongodb://127.0.0.1/mestodb', {
   .then(() => console.log('база подключена'))
   .catch((err) => console.log(err));
 
-/* app.use(cors, cookieParser(), requestLogger); */
-
 const corsOptions = {
   origin: ['http://mesto.lazarenkoea.nomoredomains.monster',
     'https://api.mesto.lazarenkoea.nomoredomains.rocks',
@@ -44,10 +39,6 @@ const corsOptions = {
   optionsSuccessStatus: 204,
 };
 app.use(cors(corsOptions));
-
-/* app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}`);
-}); */
 
 app.use(requestLogger);
 

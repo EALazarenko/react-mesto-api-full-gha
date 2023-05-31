@@ -64,28 +64,6 @@ function App() {
     }
   }, []);
 
-  /* function cbLogin(email, password) {
-    setLoading(true)
-    auth.authorize(email, password)
-      .then((data) => {
-        if (!data) {
-          throw new Error('Ошибка аутентификации');
-        }
-        if (data.token) {
-          localStorage.setItem('token', data.token)
-          setUserEmail(email);
-          setLoggedIn(true);
-          navigate('/', { replace: true });
-        }
-      })
-      .catch(err => {
-        console.log(`Ошибка: ${err}`);
-        setIsRegistrationOk(false);
-        handleInfoTooltipClick();
-      })
-      .finally(() => setLoading(false))
-  } */
-
   function cbRegister(email, password) {
     setLoading(true)
     auth.register(email, password)
@@ -107,48 +85,6 @@ function App() {
       })
       .finally(() => setLoading(false))
   }
-
-  /* const cbTokenCheck = useCallback(async () => {
-    try {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        throw new Error('no token');
-      }
-      const data = await auth.checkToken(token);
-      if (!data) {
-        throw new Error('no data');
-      }
-      setLoggedIn(true);
-      setUserEmail(data.email);
-    }
-    catch (err) {
-      console.log(`Ошибка: ${err}`);
-    }
-    finally {
-      setLoading(false);
-    }
-  }, []); */
-
-  /* const cbTokenCheck = () => {
-
-    const token = localStorage.getItem('token');
-    if (token && !loggedIn) {
-      setLoading(true)
-      auth.checkToken(token)
-        .then((data) => {
-          setUserEmail(data.email);
-          setLoggedIn(true);
-          navigate('/', { replace: true });
-
-        })
-        .catch((err) => {
-          console.log(`Ошибка: ${err}`);
-        })
-        .finally(() => setLoading(false))
-    } else {
-      setLoading(false);
-    }
-  }; */
 
   const cbLogout = () => {
     setLoggedIn(false);
@@ -175,9 +111,6 @@ function App() {
     }
   }, [loggedIn]);
 
-  /* useEffect(() => {
-    cbTokenCheck();
-  }, []); */
 
   useEffect(() => {
     api.getUserInfo()
@@ -260,7 +193,7 @@ function App() {
   function handleUpdateUser({ name, about }) {
     api
       .editUserInfo(name, about)
-      .then(({data}) => {
+      .then(({ data }) => {
         setCurrentUser(data);
         closeAllPopups();
       })
