@@ -71,10 +71,10 @@ function App() {
         if (res.error) {
           throw new Error(res.error);
         }
-        setLoggedIn(true);
+        /* setLoggedIn(true); */
         setIsRegistrationOk(true);
         handleInfoTooltipClick();
-        navigate('/', { replace: true });
+        navigate('/sign-in', { replace: true });
         setUserEmail(email);
         setLoading(false);
       })
@@ -104,6 +104,17 @@ function App() {
         })
         .catch((err) => {
           console.log(`Ошибка: ${err}`);
+        });
+      api.getUserInfo(token)
+        .then((userData) => {
+          setCurrentUser(userData);
+        })
+      api.getInitialCards(cards)
+        .then((res) => {
+          setCards(res)
+        })
+        .catch((err) => {
+          console.log(`Ошибка: ${err}`);
         })
         .finally(() => setLoading(false))
     } else {
@@ -112,7 +123,7 @@ function App() {
   }, [loggedIn]);
 
 
-  useEffect(() => {
+  /* useEffect(() => {
     api.getUserInfo()
       .then((userData) => {
         setCurrentUser(userData);
@@ -130,7 +141,7 @@ function App() {
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
       });
-  }, []);
+  }, []); */
 
   const closeAllPopups = () => {
     setIsEditAvatarPopupOpen(false);
