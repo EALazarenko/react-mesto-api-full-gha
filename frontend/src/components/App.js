@@ -104,17 +104,6 @@ function App() {
         })
         .catch((err) => {
           console.log(`Ошибка: ${err}`);
-        });
-      api.getUserInfo(token)
-        .then((userData) => {
-          setCurrentUser(userData);
-        })
-      api.getInitialCards(cards)
-        .then((res) => {
-          setCards(res)
-        })
-        .catch((err) => {
-          console.log(`Ошибка: ${err}`);
         })
         .finally(() => setLoading(false))
     } else {
@@ -123,25 +112,31 @@ function App() {
   }, [loggedIn]);
 
 
-  /* useEffect(() => {
-    api.getUserInfo()
-      .then((userData) => {
-        setCurrentUser(userData);
-      })
-      .catch((err) => {
-        console.log(`Ошибка: ${err}`);
-      });
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token && !loggedIn) {
+      api.getUserInfo()
+        .then((userData) => {
+          setCurrentUser(userData);
+        })
+        .catch((err) => {
+          console.log(`Ошибка: ${err}`);
+        });
+    }
   }, []);
 
   useEffect(() => {
-    api.getInitialCards(cards)
-      .then((res) => {
-        setCards(res)
-      })
-      .catch((err) => {
-        console.log(`Ошибка: ${err}`);
-      });
-  }, []); */
+    const token = localStorage.getItem('token');
+    if (token && !loggedIn) {
+      api.getInitialCards(cards)
+        .then((res) => {
+          setCards(res)
+        })
+        .catch((err) => {
+          console.log(`Ошибка: ${err}`);
+        });
+    }
+  }, []);
 
   const closeAllPopups = () => {
     setIsEditAvatarPopupOpen(false);
