@@ -118,6 +118,7 @@ function App() {
       api.getUserInfo()
         .then((userData) => {
           setCurrentUser(userData);
+          setLoggedIn(true);
         })
         .catch((err) => {
           console.log(`Ошибка: ${err}`);
@@ -131,6 +132,7 @@ function App() {
       api.getInitialCards(cards)
         .then((res) => {
           setCards(res)
+          setLoggedIn(true);
         })
         .catch((err) => {
           console.log(`Ошибка: ${err}`);
