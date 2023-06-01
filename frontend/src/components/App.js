@@ -92,6 +92,20 @@ function App() {
   }
 
   useEffect(() => {
+    if (loggedIn) {
+      Promise.all([api.getUserInfo(), api.getInitialCards()])
+        .then(([{ name, about, avatar, _id }, cards]) => {
+          setCurrentUser({ name, about, avatar, _id });
+          setCards(cards);
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+        .finally(() => setLoading(false));
+    }
+  }, [loggedIn]);
+
+  useEffect(() => {
     const token = localStorage.getItem('token');
     if (token && !loggedIn) {
       setLoading(true)
@@ -112,13 +126,12 @@ function App() {
   }, [loggedIn]);
 
 
-  useEffect(() => {
+ /*  useEffect(() => {
     const token = localStorage.getItem('token');
     if (token && !loggedIn) {
       api.getUserInfo()
         .then((userData) => {
           setCurrentUser(userData);
-          setLoggedIn(true);
         })
         .catch((err) => {
           console.log(`Ошибка: ${err}`);
@@ -132,13 +145,12 @@ function App() {
       api.getInitialCards(cards)
         .then((res) => {
           setCards(res)
-          setLoggedIn(true);
         })
         .catch((err) => {
           console.log(`Ошибка: ${err}`);
         });
     }
-  }, [loggedIn]);
+  }, [cards, loggedIn]); */
 
   useEffect(() => {
     if (loggedIn) {
