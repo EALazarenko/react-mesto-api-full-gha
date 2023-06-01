@@ -125,33 +125,6 @@ function App() {
     }
   }, [loggedIn]);
 
-
- /*  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token && !loggedIn) {
-      api.getUserInfo()
-        .then((userData) => {
-          setCurrentUser(userData);
-        })
-        .catch((err) => {
-          console.log(`Ошибка: ${err}`);
-        });
-    }
-  }, [loggedIn]);
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token && !loggedIn) {
-      api.getInitialCards(cards)
-        .then((res) => {
-          setCards(res)
-        })
-        .catch((err) => {
-          console.log(`Ошибка: ${err}`);
-        });
-    }
-  }, [cards, loggedIn]); */
-
   useEffect(() => {
     if (loggedIn) {
       navigate('/', { replace: true });
