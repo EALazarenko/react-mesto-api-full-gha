@@ -123,7 +123,7 @@ function App() {
           console.log(`Ошибка: ${err}`);
         });
     }
-  }, []);
+  }, [loggedIn]);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -136,7 +136,7 @@ function App() {
           console.log(`Ошибка: ${err}`);
         });
     }
-  }, []);
+  }, [loggedIn]);
 
   useEffect(() => {
     if (loggedIn) {
